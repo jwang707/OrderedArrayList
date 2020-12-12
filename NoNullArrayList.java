@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.IllegalArgumentException;
 
 public class NoNullArrayList<T> extends ArrayList<T>{
   public NoNullArrayList(){
@@ -9,19 +8,24 @@ public class NoNullArrayList<T> extends ArrayList<T>{
     super(initialCapacity);
   }
 
-  public void add(T value){
+  public boolean add(T value){
     if (value == null){
       throw new IllegalArgumentException();
     }
-    else (super.add(value));
+    else{
+      super.add(value);
+      return true;
   }
+}
 
-  public void set(T value, int index){
+  public boolean set(T value, int index){
     if (value == null){
       throw new IllegalArgumentException();
     }
-    else (super.set(value, index));
+    else{
+      super.set(index, value);
+      return true;
+    }
   }
-
 
 }

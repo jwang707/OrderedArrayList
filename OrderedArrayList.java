@@ -1,29 +1,26 @@
 import java.util.ArrayList;
 
-public class NoNullArrayList<T> extends ArrayList<T>{
-  public NoNullArrayList(){
-    super();
-  }
-  public NoNullArrayList(int initialCapacity){
-    super(initialCapacity);
-  }
-
+public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T>{
   public boolean add(T value){
     if (value == null){
       throw new IllegalArgumentException();
     }
-    else{
-      super.add(value);
-      return true;
+    for (int i = 0; i < super.size(); i++) {
+      if (super.get(i) > value) {
+        if (i != 0) {
+          super.add(i-1, value);
+        }
+        else super.add(i, value);
+      }
+    }
   }
-}
 
   public boolean add(T value, int index){
     if (value == null){
       throw new IllegalArgumentException();
     }
     else{
-      super.add(index, value);
+      OrderedArrayList.add(value);
       return true;
     }
   }
@@ -33,9 +30,9 @@ public class NoNullArrayList<T> extends ArrayList<T>{
       throw new IllegalArgumentException();
     }
     else{
-      super.set(index, value);
+      super.remove(index);
+      OrderedArrayList.add(value);
       return true;
     }
   }
-
 }

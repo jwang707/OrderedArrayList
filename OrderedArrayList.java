@@ -1,38 +1,51 @@
 import java.util.ArrayList;
 
 public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T>{
+  public OrderedArrayList(){
+      super();
+    }
+    public OrderedArrayList(int initialCapacity){
+        super(initialCapacity);
+      }
+
   public boolean add(T value){
     if (value == null){
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Can't add null");
     }
-    for (int i = 0; i < super.size(); i++) {
-      if (super.get(i) > value) {
-        if (i != 0) {
-          super.add(i-1, value);
+    super.add(value);
+    sort();
+    return true;
+    }
+
+  public void add(T value, int index){
+    add(value);
+    sort();
+  }
+
+  public T set(int index, T value){
+    if (value == null){
+      throw new IllegalArgumentException("Can't add null");
+    }
+    else{
+      remove(index);
+      super.add(value);
+      sort();
+      return remove(index);
+    }
+  }
+
+  private void sort(){
+   for (int j = 0; j < size(); j++) {
+     int min = j;
+     for (int i = j+1; i < size(); i++) {
+       if (get(i).compareTo(get(min)) < 0) {
+         min = i;
         }
-        else super.add(i, value);
-      }
-    }
-  }
-
-  public boolean add(T value, int index){
-    if (value == null){
-      throw new IllegalArgumentException();
-    }
-    else{
-      OrderedArrayList.add(value);
-      return true;
-    }
-  }
-
-  public boolean set(T value, int index){
-    if (value == null){
-      throw new IllegalArgumentException();
-    }
-    else{
-      super.remove(index);
-      OrderedArrayList.add(value);
-      return true;
-    }
-  }
+     }
+     T yeet = get(j);
+     super.set(j, get(min));
+     super.set(min, yeet);
+   
+   }
+ }
 }

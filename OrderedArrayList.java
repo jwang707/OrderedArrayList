@@ -15,23 +15,21 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
     super.add(value);
     sort();
     return true;
-    }
+  }
 
-  public void add(T value, int index){
+  public void add(int index, T value){
     add(value);
-    sort();
   }
 
   public T set(int index, T value){
     if (value == null){
       throw new IllegalArgumentException("Can't add null");
     }
-    else{
+    T removed = get(index);
       remove(index);
       super.add(value);
       sort();
-      return remove(index);
-    }
+      return removed;
   }
 
   private void sort(){
@@ -45,7 +43,6 @@ public class OrderedArrayList<T extends Comparable<T>> extends NoNullArrayList<T
      T yeet = get(j);
      super.set(j, get(min));
      super.set(min, yeet);
-   
    }
  }
 }
